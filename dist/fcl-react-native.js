@@ -9,12 +9,14 @@ var reactNative = require('react-native');
 var AsyncStorage = require('@react-native-async-storage/async-storage');
 var WebBrowser = require('@toruslabs/react-native-web-browser');
 var qs = require('qs');
+var DeviceInfo = require('react-native-device-info');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var AsyncStorage__default = /*#__PURE__*/_interopDefaultLegacy(AsyncStorage);
 var WebBrowser__default = /*#__PURE__*/_interopDefaultLegacy(WebBrowser);
 var qs__default = /*#__PURE__*/_interopDefaultLegacy(qs);
+var DeviceInfo__default = /*#__PURE__*/_interopDefaultLegacy(DeviceInfo);
 
 /**
  * @typedef {import("@onflow/typedefs").Service} Service
@@ -413,15 +415,11 @@ async function openURL(url) {
  */
 function renderBrowser(src) {
   let opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  const {
-    SCHEME_DEEP_LINK_APP
-  } = reactNative.NativeModules?.ReactNativeConfigModule || {};
-  const bundleId = reactNative.NativeModules.RNDeviceInfo?.bundleId;
   console.log("===fcl-react-native renderBrowser opts", JSON.stringify(opts));
-  console.log("===fcl-react-native renderBrowser SCHEME_DEEP_LINK_APP", SCHEME_DEEP_LINK_APP);
+  const bundleId = DeviceInfo__default["default"].getBundleId();
   console.log("===fcl-react-native renderBrowser bundleId", bundleId);
   const redirectUrl = createURL("$$fcl_auth_callback$$", {
-    scheme: SCHEME_DEEP_LINK_APP,
+    scheme: bundleId,
     queryParams: {}
   });
   console.log("===fcl-react-native renderBrowser redirectUrl", redirectUrl);

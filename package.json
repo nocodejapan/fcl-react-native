@@ -69,6 +69,7 @@
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
-    "react-native": "^0.0.0-0 || 0.60 - 0.72 || 1000.0.0"
+    "react-native": "^0.0.0-0 || 0.60 - 0.72 || 1000.0.0",
+    "react-native-device-info": "^0.0.0-^1000.0.0"
   }
 }
