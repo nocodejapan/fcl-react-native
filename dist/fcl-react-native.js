@@ -413,7 +413,11 @@ async function openURL(url) {
  */
 function renderBrowser(src) {
   let opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  const {
+    SCHEME_DEEP_LINK_APP
+  } = reactNative.NativeModules?.ReactNativeConfigModule || {};
   const redirectUrl = createURL("$$fcl_auth_callback$$", {
+    scheme: SCHEME_DEEP_LINK_APP,
     queryParams: {}
   });
   const url = new fclCore.URL(src.toString());

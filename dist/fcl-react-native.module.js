@@ -2,7 +2,7 @@ import { URL as URL$1, FCL_REDIRECT_URL_PARAM_NAME, buildMessageHandler, FCL_RES
 export { AppUtils, InteractionTemplateUtils, TestUtils, VERSION, WalletUtils, account, arg, args, atBlockHeight, atBlockId, authorization, authorizations, block, build, cadence, cdc, config, createSignableVoucher, decode, discovery, display, events, getAccount, getBlock, getBlockHeader, getChainId, getCollection, getEvents, getEventsAtBlockHeightRange, getEventsAtBlockIds, getNetworkParameters, getNodeVersionInfo, getTransaction, getTransactionStatus, invariant, isBad, isOk, limit, nodeVersionInfo, param, params, payer, ping, pipe, pluginRegistry, proposer, query, ref, sansPrefix, script, send, serialize, subscribeEvents, t, transaction, tx, validator, verifyUserSignatures, voucherIntercept, voucherToTxId, why, withPrefix } from '@onflow/fcl-core';
 import { config } from '@onflow/config';
 import { useState, useEffect, createElement } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Linking, Platform, AppState } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Linking, Platform, NativeModules, AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WebBrowser from '@toruslabs/react-native-web-browser';
 import qs from 'qs';
@@ -404,7 +404,11 @@ async function openURL(url) {
  */
 function renderBrowser(src) {
   let opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  const {
+    SCHEME_DEEP_LINK_APP
+  } = NativeModules?.ReactNativeConfigModule || {};
   const redirectUrl = createURL("$$fcl_auth_callback$$", {
+    scheme: SCHEME_DEEP_LINK_APP,
     queryParams: {}
   });
   const url = new URL$1(src.toString());

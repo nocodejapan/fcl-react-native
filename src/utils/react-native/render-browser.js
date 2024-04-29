@@ -1,6 +1,7 @@
 import WebBrowser from '@toruslabs/react-native-web-browser';
 import { FCL_REDIRECT_URL_PARAM_NAME, URL } from "@onflow/fcl-core"
 import * as Linking from '@/linking'
+import { NativeModules } from 'react-native'
 
 /**
  *
@@ -9,7 +10,9 @@ import * as Linking from '@/linking'
  * @returns {[object, () => void]}
  */
 export function renderBrowser(src, opts = {}) {
+  const { SCHEME_DEEP_LINK_APP } = NativeModules?.ReactNativeConfigModule || {}
   const redirectUrl = Linking.createURL("$$fcl_auth_callback$$", {
+    scheme: SCHEME_DEEP_LINK_APP,
     queryParams: {},
   })
   const url = new URL(src.toString())
