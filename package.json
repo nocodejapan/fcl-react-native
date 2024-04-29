@@ -4,7 +4,14 @@
   "description": "Flow Client Library for react-native, clone from fcl-js sdk",
   "license": "Apache-2.0",
   "author": "Dapper Labs <dev@dapperlabs.com>",
-  "homepage": "https://github.com/onflow/fcl-js/tree/master/packages/fcl-react-native",
+  "homepage": "https://onflow.org",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/onflow/flow-js-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/onflow/flow-js-sdk/issues"
+  },
   "jest": {
     "testEnvironment": "jsdom",
     "globals": {

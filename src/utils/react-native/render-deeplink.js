@@ -11,6 +11,7 @@ import { URL } from "@onflow/fcl-core"
  * @returns {[null, () => void]}
  */
 export function renderDeeplink(src, opts = {}) {
+  console.log("===fcl-react-native renderDepplink src", src.toString());
   const url = new URL(src.toString())
 
   // Custom schemes (i.e mywallet://) are not supported for

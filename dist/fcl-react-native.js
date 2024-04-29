@@ -416,12 +416,17 @@ function renderBrowser(src) {
   const {
     SCHEME_DEEP_LINK_APP
   } = reactNative.NativeModules?.ReactNativeConfigModule || {};
+  const bundleId = reactNative.NativeModules.RNDeviceInfo?.bundleId;
+  console.log("===fcl-react-native SCHEME_DEEP_LINK_APP", SCHEME_DEEP_LINK_APP);
+  console.log("===fcl-react-native bundleId", bundleId);
   const redirectUrl = createURL("$$fcl_auth_callback$$", {
     scheme: SCHEME_DEEP_LINK_APP,
     queryParams: {}
   });
+  console.log("===fcl-react-native renderBrowser redirectUrl", redirectUrl);
   const url = new fclCore.URL(src.toString());
   url.searchParams.append(fclCore.FCL_REDIRECT_URL_PARAM_NAME, redirectUrl);
+  console.log("===fcl-react-native renderBrowser open url", url.toString());
   const webbrowser = WebBrowser__default["default"].openAuthSessionAsync(url.toString());
   const unmount = () => {
     try {
@@ -450,6 +455,7 @@ function renderBrowser(src) {
  */
 function renderDeeplink(src) {
   let opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  console.log("===fcl-react-native renderDepplink src", src.toString());
   const url = new fclCore.URL(src.toString());
 
   // Custom schemes (i.e mywallet://) are not supported for
