@@ -417,8 +417,9 @@ function renderBrowser(src) {
     SCHEME_DEEP_LINK_APP
   } = reactNative.NativeModules?.ReactNativeConfigModule || {};
   const bundleId = reactNative.NativeModules.RNDeviceInfo?.bundleId;
-  console.log("===fcl-react-native SCHEME_DEEP_LINK_APP", SCHEME_DEEP_LINK_APP);
-  console.log("===fcl-react-native bundleId", bundleId);
+  console.log("===fcl-react-native renderBrowser opts", JSON.stringify(opts));
+  console.log("===fcl-react-native renderBrowser SCHEME_DEEP_LINK_APP", SCHEME_DEEP_LINK_APP);
+  console.log("===fcl-react-native renderBrowser bundleId", bundleId);
   const redirectUrl = createURL("$$fcl_auth_callback$$", {
     scheme: SCHEME_DEEP_LINK_APP,
     queryParams: {}

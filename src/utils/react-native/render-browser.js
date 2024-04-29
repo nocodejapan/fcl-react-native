@@ -12,8 +12,9 @@ import { NativeModules } from 'react-native'
 export function renderBrowser(src, opts = {}) {
   const { SCHEME_DEEP_LINK_APP } = NativeModules?.ReactNativeConfigModule || {}
   const bundleId = NativeModules.RNDeviceInfo?.bundleId;
-  console.log("===fcl-react-native SCHEME_DEEP_LINK_APP", SCHEME_DEEP_LINK_APP);
-  console.log("===fcl-react-native bundleId", bundleId);
+  console.log("===fcl-react-native renderBrowser opts", JSON.stringify(opts));
+  console.log("===fcl-react-native renderBrowser SCHEME_DEEP_LINK_APP", SCHEME_DEEP_LINK_APP);
+  console.log("===fcl-react-native renderBrowser bundleId", bundleId);
   const redirectUrl = Linking.createURL("$$fcl_auth_callback$$", {
     scheme: SCHEME_DEEP_LINK_APP,
     queryParams: {},
