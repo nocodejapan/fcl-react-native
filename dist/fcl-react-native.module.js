@@ -273,7 +273,7 @@ function createURL(path) {
     if (outputPath) outputPath = ensureLeadingSlash(path, true);
     return encodeURI(`${origin}${outputPath}${queryString}`);
   }
-  let hostUri = '';
+  let hostUri = '/';
 
   // if (hasCustomScheme() && isExpoHosted()) {
   //   hostUri = '';

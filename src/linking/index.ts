@@ -151,7 +151,7 @@ export function createURL(
   // const resolvedScheme = resolveScheme({ scheme });
   const resolvedScheme = ''
 
-  let hostUri = getHostUri() || '';
+  let hostUri = getHostUri() || '/';
 
   // if (hasCustomScheme() && isExpoHosted()) {
   //   hostUri = '';
