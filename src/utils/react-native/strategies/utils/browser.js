@@ -1,5 +1,4 @@
-// import * as Linking from "expo-linking"
-import * as Linking from "./custom-linking"
+import * as Linking from '@/linking'
 import {renderBrowser} from "../../render-browser"
 import {serviceEndpoint} from "./service-endpoint"
 import {FCL_RESPONSE_PARAM_NAME, buildMessageHandler} from "@onflow/fcl-core"

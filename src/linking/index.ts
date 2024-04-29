@@ -1,14 +1,8 @@
 import qs from 'qs';
-import { useEffect, useState } from 'react';
 import { EmitterSubscription, Linking as NativeLinking, Platform } from 'react-native';
-// import URL from 'url-parse';
-
-// import { hasCustomScheme, resolveScheme } from './Schemes';
-
-import type { ParsedQs } from 'qs';
 
 // @docsMissing
-export type QueryParams = ParsedQs;
+export type QueryParams = qs.ParsedQs;
 
 // @needsAudit @docsMissing
 export type ParsedURL = {
@@ -79,18 +73,9 @@ function getHostUri(): string | null {
   return ""
 }
 
-// function isExpoHosted(): boolean {
-//   const hostUri = getHostUri();
-//   return !!(
-//     hostUri &&
-//     (/^(.*\.)?(expo\.io|exp\.host|exp\.direct|expo\.test|expo\.dev)(:.*)?(\/.*)?$/.test(hostUri) ||
-//       Constants.expoGoConfig?.developer)
-//   );
-// }
-
-// function removeScheme(url: string): string {
-//   return url.replace(/^[a-zA-Z0-9+.-]+:\/\//, '');
-// }
+function removeScheme(url: string): string {
+  return url.replace(/^[a-zA-Z0-9+.-]+:\/\//, '');
+}
 
 function removePort(url: string): string {
   return url.replace(/(?=([a-zA-Z0-9+.-]+:\/\/)?[^/]):\d+/, '');
@@ -123,33 +108,6 @@ function ensureLeadingSlash(input: string, shouldAppend: boolean): string {
   }
   return input;
 }
-
-// // @needsAudit
-// /**
-//  * Create a URL that works for the environment the app is currently running in.
-//  * The scheme in bare and standalone must be defined in the app.json under `expo.scheme`.
-//  *
-//  * # Examples
-//  * - Bare: empty string
-//  * - Standalone, Custom: `yourscheme:///path`
-//  * - Web (dev): `https://localhost:19006/path`
-//  * - Web (prod): `https://myapp.com/path`
-//  * - Expo Client (dev): `exp://128.0.0.1:19000/--/path`
-//  * - Expo Client (prod): `exp://exp.host/@yourname/your-app/--/path`
-//  *
-//  * @param path addition path components to append to the base URL.
-//  * @param queryParams An object with a set of query parameters. These will be merged with any
-//  * Expo-specific parameters that are needed (e.g. release channel) and then appended to the URL
-//  * as a query string.
-//  * @param scheme Optional URI protocol to use in the URL `<scheme>:///`, when `undefined` the scheme
-//  * will be chosen from the Expo config (`app.config.js` or `app.json`).
-//  * @return A URL string which points to your app with the given deep link information.
-//  * @deprecated An alias for [`createURL()`](#linkingcreateurlpath-namedparameters). This method is
-//  * deprecated and will be removed in a future SDK version.
-//  */
-// export function makeUrl(path: string = '', queryParams?: QueryParams, scheme?: string): string {
-//   return createURL(path, { queryParams, scheme, isTripleSlashed: true });
-// }
 
 // @needsAudit
 /**
@@ -308,65 +266,6 @@ export function addEventListener(type: 'url', handler: URLListener): EmitterSubs
   return NativeLinking.addEventListener(type, handler);
 }
 
-// // @needsAudit
-// /**
-//  * Helper method which wraps React Native's `Linking.getInitialURL()` in `Linking.parse()`.
-//  * Parses the deep link information out of the URL used to open the experience initially.
-//  * If no link opened the app, all the fields will be `null`.
-//  * > On the web it parses the current window URL.
-//  * @return A promise that resolves with `ParsedURL` object.
-//  */
-// export async function parseInitialURLAsync(): Promise<ParsedURL> {
-//   const initialUrl = await NativeLinking.getInitialURL();
-//   if (!initialUrl) {
-//     return {
-//       scheme: null,
-//       hostname: null,
-//       path: null,
-//       queryParams: null,
-//     };
-//   }
-
-//   return parse(initialUrl);
-// }
-
-// // @needsAudit
-// /**
-//  * Launch an Android intent with extras.
-//  * > Use [IntentLauncher](./intent-launcher) instead, `sendIntent` is only included in
-//  * > `Linking` for API compatibility with React Native's Linking API.
-//  * @platform android
-//  */
-// export async function sendIntent(action: string, extras?: SendIntentExtras[]): Promise<void> {
-//   if (Platform.OS === 'android') {
-//     return await NativeLinking.sendIntent(action, extras);
-//   }
-//   throw new UnavailabilityError('Linking', 'sendIntent');
-// }
-
-// // @needsAudit
-// /**
-//  * Open the operating system settings app and displays the app’s custom settings, if it has any.
-//  */
-// export async function openSettings(): Promise<void> {
-//   if (Platform.OS === 'web') {
-//     throw new UnavailabilityError('Linking', 'openSettings');
-//   }
-//   if (NativeLinking.openSettings) {
-//     return await NativeLinking.openSettings();
-//   }
-//   await openURL('app-settings:');
-// }
-
-// // @needsAudit
-// /**
-//  * Get the URL that was used to launch the app if it was launched by a link.
-//  * @return The URL string that launched your app, or `null`.
-//  */
-// export async function getInitialURL(): Promise<string | null> {
-//   return (await NativeLinking.getInitialURL()) ?? null;
-// }
-
 // @needsAudit
 /**
  * Attempt to open the given URL with an installed app. See the [Linking guide](/guides/linking)
@@ -380,43 +279,3 @@ export async function openURL(url: string): Promise<true> {
   validateURL(url);
   return await NativeLinking.openURL(url);
 }
-
-// // @needsAudit
-// /**
-//  * Determine whether or not an installed app can handle a given URL.
-//  * On web this always returns `true` because there is no API for detecting what URLs can be opened.
-//  * @param url The URL that you want to test can be opened.
-//  * @return A `Promise` object that is fulfilled with `true` if the URL can be handled, otherwise it
-//  * `false` if not.
-//  *
-//  * The `Promise` will reject on Android if it was impossible to check if the URL can be opened, and
-//  * on iOS if you didn't [add the specific scheme in the `LSApplicationQueriesSchemes` key inside **Info.plist**](/guides/linking#linking-from-your-app).
-//  */
-// export async function canOpenURL(url: string): Promise<boolean> {
-//   validateURL(url);
-//   return await NativeLinking.canOpenURL(url);
-// }
-
-// // @needsAudit
-// /**
-//  * Returns the initial URL followed by any subsequent changes to the URL.
-//  * @return Returns the initial URL or `null`.
-//  */
-// export function useURL(): string | null {
-//   const [url, setLink] = useState<string | null>(null);
-
-//   function onChange(event: { url: string }) {
-//     setLink(event.url);
-//   }
-
-//   useEffect(() => {
-//     getInitialURL().then((url) => setLink(url));
-//     const subscription = addEventListener('url', onChange);
-//     return () => subscription.remove();
-//   }, []);
-
-//   return url;
-// }
-
-// export * from './Linking.types';
-// export * from './Schemes';

@@ -1,9 +1,6 @@
-// import * as WebBrowser from "expo-web-browser"
 import WebBrowser from '@toruslabs/react-native-web-browser';
-// import * as Linking from "expo-linking"
-// import {Linking} from "react-native"
 import { FCL_REDIRECT_URL_PARAM_NAME, URL } from "@onflow/fcl-core"
-import * as Linking from './custom-linking'
+import * as Linking from '@/linking'
 
 /**
  *

@@ -1,5 +1,4 @@
-// import * as Linking from "expo-linking"
-import * as Linking from "./custom-linking"
+import * as Linking from '@/linking'
 import { AppState } from "react-native"
 import { URL } from "@onflow/fcl-core"
 
